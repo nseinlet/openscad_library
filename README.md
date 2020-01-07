@@ -16,7 +16,7 @@ include <any_element_of_libraries.scad>
 
 ## Smaragd
 
-Smaragd module is in two parts, `smaragd.scad` which original parts and `smaragd_assemblies.scad` which contains semi-finished products
+Smaragd module is in two parts, `smaragd.scad` with original parts and `smaragd_assemblies.scad` which contains semi-finished products
 
 Just include the assemblies module to design a smaragd:
 ```
