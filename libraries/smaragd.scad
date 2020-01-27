@@ -43,10 +43,10 @@ module ailette() {
 
 module demi_attache_soc(x,y){
     translate([x,y+4,55]) difference() {
-      hull() {
+      union() { hull() {
         translate([0, 4,  0]) cube([2, 8, 23], center=true);
         translate([0,-4.5,0]) cube([2, 1, 10], center=true);
-      };
+      };};
       translate([0,-4, 0]) cube([3, 8, 8], center=true);
       translate([0, 4, 8]) rotate(90,[0,1,0]) cylinder(r=1, h=3, center=true);
       translate([0, 4,-8]) rotate(90,[0,1,0]) cylinder(r=1, h=3, center=true);
@@ -69,10 +69,11 @@ module attache_bras(x){
     translate([x,-4,55]) difference() {
       hull() {
           translate([0, 32,  0]) cube([2, 64, 8], center=true);
-          translate([0,-8.5,-20]) cube([2, 10, 0.1], center=true);
+          /* translate([0,-8.5,-30]) cube([2, 10, 0.1], center=true); */
+          translate([0,-6,-26]) rotate(90,[0,1,0]) cylinder(r=5, h=2, center=true);
       };
       translate([0, 50,  0]) rotate(90,[0,1,0]) cylinder(r=1.5, h=3, center=true);
-      translate([0,-6, -16]) rotate(90,[0,1,0]) cylinder(r=1.5, h=3, center=true);
+      translate([0,-6, -26]) rotate(90,[0,1,0]) cylinder(r=1.5, h=3, center=true);
       translate([0, 4, 0]) cube([3, 8, 8], center=true);
       translate([0, 60, 0]) cube([3, 8, 8], center=true);
       translate([0, -12, -17]) cube([3, 4, 8], center=true);
@@ -184,11 +185,38 @@ module pivot(x){
   }
 }
 
+module _girder_rounding(){
+  difference(){
+    translate([0,0.75,0])cube([2,1.5,8],center=true);
+    hull(){
+      translate([0,0, 2.5]) rotate(90,[0,1,0]) cylinder(r=1.5,h=3,center=true);
+      translate([0,0,-2.5]) rotate(90,[0,1,0]) cylinder(r=1.5,h=3,center=true);
+    }
+  }
+}
+module girder(length=200, front_hole=false, rear_hole=false){
+  difference(){
+    cube([length, 8, 8], center=true);
+    if (front_hole){
+      for (a =[0, 58, -58]){
+        translate([a+2,2.5,0]) _girder_rounding();
+        translate([a-2,2.5,0]) _girder_rounding();
+      }
+    }
+    if (rear_hole){
+      for (a =[29, 87, -29, -87]){
+        translate([a+2,2.5,0]) _girder_rounding();
+        translate([a-2,2.5,0]) _girder_rounding();
+      }
+    }
+  }
+}
+
 module large_frame(length=200) {
   union() {
     //Poutres
-    translate([0, 0, 55]) cube([length, 8, 8], center=true);
-    translate([0, 56, 55]) cube([length, 8, 8], center=true);
+    translate([0, 0, 55]) girder(length,front_hole=true);
+    translate([0, 56, 55]) girder(length,rear_hole=true);
     //Traverses
     translate([-1*(1+length/2), 28, 55]) cube([2, 64, 8], center=true);
     translate([    1+length/2 , 28, 55]) cube([2, 64, 8], center=true);
@@ -226,7 +254,7 @@ module te_disque(x){
   }
 }
 
-module disque_rouleau(x,y,diameter) {
+module disque_rouleau(x,y,diameter, inner_diameter=4) {
   translate([x,y,diameter/2]) rotate(90,[0,1,0]) difference() {
     hull(){
       cylinder(r=diameter/2-5, h=2, center=true);
@@ -234,7 +262,7 @@ module disque_rouleau(x,y,diameter) {
           rotate(angl, [0,0,1]) translate([0, (diameter/2)-1, 0]) cylinder(r=1.5, h=2, center=true);
       }
     }
-    cylinder(r=4, h=3, center=true);
+    cylinder(r=inner_diameter, h=3, center=true);
     for(angl=[0:45:360]){
           rotate(angl, [0,0,1]) translate([0, diameter/2, 0]) cylinder(r=1.5, h=3, center=true);
     }
