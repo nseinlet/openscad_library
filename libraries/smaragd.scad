@@ -67,10 +67,12 @@ module demi_attache_disque(x, y, rotate_angle=0, z_correction=0){
 
 module attache_bras(x){
     translate([x,-4,55]) difference() {
-      hull() {
-          translate([0, 32,  0]) cube([2, 64, 8], center=true);
-          /* translate([0,-8.5,-30]) cube([2, 10, 0.1], center=true); */
+      union(){
+        translate([0, 32,  0]) cube([2, 64, 8], center=true);
+        hull() {
+          translate([0,11.3,-2]) cube([2, 20, 0.1], center=true);
           translate([0,-6,-26]) rotate(90,[0,1,0]) cylinder(r=5, h=2, center=true);
+        };
       };
       translate([0, 50,  0]) rotate(90,[0,1,0]) cylinder(r=1.5, h=3, center=true);
       translate([0,-6, -26]) rotate(90,[0,1,0]) cylinder(r=1.5, h=3, center=true);
