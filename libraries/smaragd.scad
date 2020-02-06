@@ -325,6 +325,26 @@ module barre_pivot(x, y, reversed=0){
   }
 }
 
+module barre_pivot_longue(x, y, reversed=0){
+  translate([x,y,50]) mirror([reversed,0,0]) difference(){
+    union(){
+      hull(){
+        translate([-1, 0, 5]) cube([8, 2, 8], center=true);
+        translate([-1, 0, 20]) rotate(90,[1,0,0]) cylinder(r=4, h=2, center=true);
+        translate([14, 0, 5]) cube([8, 2, 8], center=true);
+      }
+      hull(){
+        translate([-1, 0, 20]) rotate(90,[1,0,0]) cylinder(r=4, h=2, center=true);
+        translate([-60, 0, 20]) rotate(90,[1,0,0]) cylinder(r=4, h=2, center=true);
+      }
+    }
+    //Rotation axle
+    translate([-60, 0, 20]) rotate(90,[1,0,0]) cylinder(r=2, h=3, center=true);
+    //Fixing
+    translate([14, 0, 5]) rotate(90,[1,0,0]) cylinder(r=1.5, h=3, center=true);
+  }
+}
+
 module rotation_axle(x){
   translate([x,25,70]) rotate(90,[1,0,0]) cylinder(r=2,h=70, center=true);
 }
@@ -349,10 +369,10 @@ module semiport_avant_bas(){
 }
 
 module semiport_arriere_bas(x){
-  translate([x, 125, 55]) difference(){
-      cube([2, 130, 8], center=true);
-    translate([0,40,0]) rotate(90,[0,1,0]) cylinder(r=1,h=3, center=true);
-    translate([0,61,0]) rotate(90,[0,1,0]) cylinder(r=1.5,h=3, center=true);
+  translate([x, 140, 55]) difference(){
+      cube([2, 160, 8], center=true);
+    translate([0,25,0]) rotate(90,[0,1,0]) cylinder(r=1,h=3, center=true);
+    translate([0,76,0]) rotate(90,[0,1,0]) cylinder(r=1.5,h=3, center=true);
   }
 }
 
@@ -368,7 +388,7 @@ module semiport_arriere_haut(x, reversed=0){
 }
 
 module semiport_arriere_axe(){
-  translate([0, 213, 8]) rotate(30,[1,0,0])difference(){
+  translate([0, 243, 8]) rotate(30,[1,0,0])difference(){
     union(){
         cube([80,8,8], center=true);
         translate([ 6,0,54]) cube([2,8,100], center=true);
