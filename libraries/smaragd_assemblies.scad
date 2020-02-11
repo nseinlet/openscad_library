@@ -25,6 +25,15 @@ module _3points(){
   contrevent_3emepoint(-2,1);
 }
 
+module _3points_vis(){
+  attache_bras( 25);
+  attache_bras(-25);
+  barre_3emepoint_pliee( 4);
+  barre_3emepoint_pliee(-4,1);
+  contrevent_3emepoint(2);
+  contrevent_3emepoint(-2,1);
+}
+
 module _large_frame(x, y) {
   translate([x,y,0]) union() {
     large_frame();

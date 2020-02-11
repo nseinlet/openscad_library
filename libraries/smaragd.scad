@@ -110,6 +110,25 @@ module barre_3emepoint(x){
     }
 }
 
+module barre_3emepoint_pliee(x, reversed=0){
+    translate([x,-1.5,55]) mirror([reversed,0,0]) difference() {
+      union() {
+        hull(){
+          translate([0, 3, 42]) rotate(90,[0,1,0]) cylinder(h=2, r=4, center=true);
+          translate([0, 6, 42]) rotate(90,[0,1,0]) cylinder(h=2, r=4, center=true);
+        }
+        translate([0, 0, 26]) cube([2, 6, 40], center=true);
+        translate([4, 0, 6]) cube([6, 6, 2], center=true);
+      }
+      translate([4, 0, 6]) rotate(90,[0,0,0]) cylinder(r=1, h=3, center=true);
+
+      translate([0, 7, 42]) rotate(90,[0,1,0]) cylinder(r=1, h=3, center=true);
+      for(z=[43:-4:25])
+      translate([0, 0, z]) rotate(90,[0,1,0]) cylinder(r=1, h=3, center=true);
+
+    }
+}
+
 module contrevent_3emepoint(x, reversed=0){
   translate([x,-4,55]) mirror([reversed,0,0]) difference() {
     union() {
@@ -400,5 +419,49 @@ module semiport_arriere_axe(){
       }
     }
     rotate(90,[0,1,0]) cylinder(r=1.5,h=83, center=true);
+  }
+}
+
+
+module support_double_verins(y=0){
+	translate([0, 25+y,70]) difference() {
+		 union() {
+			 hull(){
+				 translate([-36,0,0]) rotate(90,[1,0,0]) cylinder(r=4,h=2, center=true);
+				 translate([ 36,0,0]) rotate(90,[1,0,0]) cylinder(r=4,h=2, center=true);
+			 }
+       for (mult=[1,-1]){
+		  	 hull(){
+		  		 translate([mult*15,0,0]) rotate(90,[1,0,0]) cylinder(r=4,h=2, center=true);
+		  		 translate([mult*25,0,15]) rotate(90,[1,0,0]) cylinder(r=4,h=2, center=true);
+		  	 }
+       }
+
+		 }
+
+     //Rotation Axle
+     translate([-36,0,0]) rotate(90,[1,0,0]) cylinder(r=2,h=2, center=true);
+     translate([ 36,0,0]) rotate(90,[1,0,0]) cylinder(r=2,h=2, center=true);
+     //
+     for (mult=[1,-1]){
+       translate([mult*25,0,15]) rotate(90,[1,0,0]) cylinder(r=2,h=2.5, center=true);
+     }
+	 }
+}
+
+module support_simple_verin(x=0,y=0,z=0,mirroring=0){
+	translate([x, y,z]) mirror([mirroring,0,0]) difference() {
+    union(){
+      hull(){
+        translate([0, 0, 0.5]) cube([8, 2, 1], center=true);
+        translate([0, 0, 25]) rotate(90, [1, 0, 0]) cylinder(r=4, h=2, center=true);
+        translate([-4, 0, 25]) rotate(90, [1, 0, 0]) cylinder(r=4, h=2, center=true);
+      }
+    }
+    translate([0, 0, 4]) rotate(90, [1, 0, 0]) cylinder(r=1.5, h=2.5, center=true);
+    hull(){
+      translate([0, 0, 25]) rotate(90, [1, 0, 0]) cylinder(r=2, h=2.5, center=true);
+      translate([-4, 0, 25]) rotate(90, [1, 0, 0]) cylinder(r=2, h=2.5, center=true);
+    }
   }
 }
