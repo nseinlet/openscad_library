@@ -19,7 +19,7 @@ module pointe_soc() {
   }
 }
 
-module ailette() {
+module ailette_large() {
   translate([0,0,5]) rotate(10,[1,0,0]) difference() {
     union(){
       hull() {
@@ -37,6 +37,28 @@ module ailette() {
       translate([0,0,0]) cube([10,0.1,3], center=true);
       translate([0,13,0]) cube([22,0.1,3], center=true);
     }
+    cube([2,5,5], center=true);
+  }
+}
+
+module ailette() {
+  translate([0,0,5]) rotate(10,[1,0,0]) difference() {
+    union(){
+      hull() {
+        translate([0,-22,0]) cube([0.1,0.1,2], center=true);
+        translate([0,-19,0]) cube([5,0.1,2], center=true);
+        translate([0,-14,0]) cube([5,0.1,2], center=true);
+      }
+      hull() {
+        translate([0,-14,0]) cube([5,0.1,2], center=true);
+        translate([0,-9,0]) cube([7,0.1,2], center=true);
+        translate([0,3,0]) cube([7,0.1,2], center=true);
+      }
+    }
+    /* hull() {
+      translate([0,0,0]) cube([5,0.1,3], center=true);
+      translate([0,13,0]) cube([10,0.1,3], center=true);
+    } */
     cube([2,5,5], center=true);
   }
 }
@@ -97,50 +119,59 @@ module base_3emepoint(x){
 
 module barre_3emepoint(x){
     translate([x,-4,55]) difference() {
-      union() {
-        translate([0, 3, 42]) rotate(90,[0,1,0]) cylinder(h=2, r=4, center=true);
-        translate([0, 0, 26]) cube([2, 6, 40], center=true);
-      }
-      translate([0, 0, 10]) rotate(90,[0,1,0]) cylinder(r=1.5, h=3, center=true);
-
-      translate([0, 4, 42]) rotate(90,[0,1,0]) cylinder(r=1, h=3, center=true);
-      for(z=[43:-4:25])
-      translate([0, 0, z]) rotate(90,[0,1,0]) cylinder(r=1, h=3, center=true);
-
+      _barre_3emepoint_verticale(x);
+      translate([0, 0, 10]) rotate(90,[0, 1, 0]) cylinder(r=1.5, h=3, center=true);
     }
 }
 
 module barre_3emepoint_pliee(x, reversed=0){
-    translate([x,-1.5,55]) mirror([reversed,0,0]) difference() {
+    translate([x,-1.5,55]) mirror([reversed,0,0]) union() {
+      _barre_3emepoint_verticale(x);
+      _barre_3emepoint_horizontale();
+    }
+}
+
+module barre_3emepoint_unfold(x, reversed=0){
+    translate([x, -1.5, 55]) mirror([reversed, 0, 0]) union() {
+      _barre_3emepoint_verticale(x);
+      translate([-6, 0, 7]) rotate(90, [0, 1, 0]) _barre_3emepoint_horizontale();
+    }
+}
+
+module _barre_3emepoint_verticale(x){
+    difference() {
       union() {
         hull(){
           translate([0, 3, 42]) rotate(90,[0,1,0]) cylinder(h=2, r=4, center=true);
           translate([0, 6, 42]) rotate(90,[0,1,0]) cylinder(h=2, r=4, center=true);
         }
         translate([0, 0, 26]) cube([2, 6, 40], center=true);
-        translate([4, 0, 6]) cube([6, 6, 2], center=true);
       }
-      translate([4, 0, 6]) rotate(90,[0,0,0]) cylinder(r=1, h=3, center=true);
-
       translate([0, 7, 42]) rotate(90,[0,1,0]) cylinder(r=1, h=3, center=true);
       for(z=[43:-4:25])
       translate([0, 0, z]) rotate(90,[0,1,0]) cylinder(r=1, h=3, center=true);
+    }
+}
 
+module _barre_3emepoint_horizontale(){
+    difference() {
+      translate([4, 0, 6]) cube([6, 6, 2], center=true);
+      translate([4, 0, 6]) rotate(90,[0,0,0]) cylinder(r=1, h=3, center=true);
     }
 }
 
 module contrevent_3emepoint(x, reversed=0){
   translate([x,-4,55]) mirror([reversed,0,0]) difference() {
     union() {
-      translate([0, 4, 42]) rotate(90,[0,1,0]) cylinder(r=3, h=2, center=true);
+      translate([0, 7, 42]) rotate(90,[0,1,0]) cylinder(r=3, h=2, center=true);
       translate([21, 50,  0]) rotate(90,[0,1,0]) cylinder(r=3, h=2, center=true);
       hull(){
-      translate([-1, 3, 39]) rotate(30,[-1,0,0]) cube([2,6,6]);
+      translate([-1, 6, 39]) rotate(30,[-1,0,0]) cube([2,6,6]);
       translate([20, 43.8, 0]) rotate(30,[-1,0,0]) cube([2,6,6]);
       }
     }
     translate([21, 50,  0]) rotate(90,[0,1,0]) cylinder(r=1.5, h=3, center=true);
-    translate([0, 4, 42]) rotate(90,[0,1,0]) cylinder(r=1, h=3, center=true);
+    translate([0, 7, 42]) rotate(90,[0,1,0]) cylinder(r=1, h=3, center=true);
   }
 }
 
@@ -233,14 +264,22 @@ module girder(length=200, front_hole=false, rear_hole=false){
   }
 }
 
+module attache_girder(){
+  difference(){
+    cube([2, 64, 8], center=true);
+    translate([0,  28, 0]) rotate(90,[0,1,0]) cylinder(r=1,h=3,center=true);
+    translate([0, -28, 0]) rotate(90,[0,1,0]) cylinder(r=1,h=3,center=true);
+  }
+}
+
 module large_frame(length=200) {
   union() {
     //Poutres
     translate([0, 0, 55]) girder(length,front_hole=true);
     translate([0, 56, 55]) girder(length,rear_hole=true);
     //Traverses
-    translate([-1*(1+length/2), 28, 55]) cube([2, 64, 8], center=true);
-    translate([    1+length/2 , 28, 55]) cube([2, 64, 8], center=true);
+    translate([-1*(1+length/2), 28, 55]) attache_girder();
+    translate([    1+length/2 , 28, 55]) attache_girder();
   }
 }
 
@@ -250,8 +289,8 @@ module small_frame() {
     translate([16, 0, 55]) cube([86, 8, 8], center=true);
     translate([16, 56, 55]) cube([86, 8, 8], center=true);
     //Traverses
-    translate([-26, 28, 55]) cube([2, 64, 8], center=true);
-    translate([ 60, 28, 55]) cube([2, 64, 8], center=true);
+    translate([-26, 28, 55]) attache_girder();
+    translate([ 60, 28, 55]) attache_girder();
   }
 }
 
@@ -275,7 +314,7 @@ module te_disque(x){
   }
 }
 
-module disque_rouleau(x,y,diameter, inner_diameter=4) {
+module disque_rouleau(x,y,diameter, inner_ray=4) {
   translate([x,y,diameter/2]) rotate(90,[0,1,0]) difference() {
     hull(){
       cylinder(r=diameter/2-5, h=2, center=true);
@@ -283,7 +322,7 @@ module disque_rouleau(x,y,diameter, inner_diameter=4) {
           rotate(angl, [0,0,1]) translate([0, (diameter/2)-1, 0]) cylinder(r=1.5, h=2, center=true);
       }
     }
-    cylinder(r=inner_diameter, h=3, center=true);
+    cylinder(r=inner_ray, h=3, center=true);
     for(angl=[0:45:360]){
           rotate(angl, [0,0,1]) translate([0, diameter/2, 0]) cylinder(r=1.5, h=3, center=true);
     }

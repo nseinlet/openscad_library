@@ -93,57 +93,64 @@ module _support_rouleaux_et_disques(x) {
   pivot(x+2);
 }
 
-module _large_barre_disque(fix1, fix2, length=200, pos_first_disque=0) {
-  poutre_disques(100, 37, length);
+module _large_barre_disque(fix1, fix2, length=200, pos_first_disque=0, xswitch=0) {
   //Attache au chassis
   demi_attache_disque(fix1-2, 0, 90);
   demi_attache_disque(fix1+2, 0, 90);
   demi_attache_disque(fix2-2, 0, 90);
   demi_attache_disque(fix2+2, 0, 90);
-  //Attache des disques
-  for (a=[pos_first_disque:58:length/2]) { for (mult=[-1,1]){
-      translate([a*mult,0,-3]) demi_attache_disque(-2, 3, 0);
-      translate([a*mult,0,-3]) demi_attache_disque( 2, 3, 0);
-      _double_disque(a*mult);
-    }}
+  translate([xswitch, 0, 0]){
+    poutre_disques(100, 37, length);
+    //Attache des disques
+    for (a=[pos_first_disque:58:length/2]) { for (mult=[-1,1]){
+        translate([a*mult,0,-3]) demi_attache_disque(-2, 3, 0);
+        translate([a*mult,0,-3]) demi_attache_disque( 2, 3, 0);
+        _double_disque(a*mult);
+        }}
+  }
 }
 
 module _rouleau(length, y) {
-  diam = 30;
+  diameter = 30;
   for(angl=[0:45:360]){
-    translate([0, y, diam/2])  rotate(angl, [1,0,0]) translate([0, diam/2, 0]) rotate(90,[0,1,0]) cylinder(r=1.5, h=length, center=true);
+    translate([0, y, diameter/2])  rotate(angl, [1,0,0]) translate([0, diameter/2, 0]) rotate(90,[0,1,0]) cylinder(r=1.5, h=length, center=true);
   }
-  for(x=[(length/2)-10:-30:0]){
-    disque_rouleau(x, y, diam);
-    disque_rouleau(-x, y, diam);
+  for(x=[(length/2)-10:-29:0]){
+    inner_ray = x>=(length/2)-15?4:10;
+    disque_rouleau(x, y, diameter, inner_ray);
+    disque_rouleau(-x, y, diameter, inner_ray);
+
   }
 }
 
-module _rouleau_simple(fix1=70,fix2=-70,length=200){
-  te_simple_rouleau(-length/2);
-  poutre_disques(145, 36.5, length);
-  te_simple_rouleau(length/2);
+module _rouleau_simple(fix1=70, fix2=-70, length=200, xswitch=0){
+  translate([xswitch, 0, 0]){
+    te_simple_rouleau(-length/2);
+    poutre_disques(145, 36.5, length);
+    te_simple_rouleau(length/2);
 
+    demi_attache_disque(fix1+2, 45, 90, -1);
+    demi_attache_disque(fix1-2, 45, 90, -1);
+    demi_attache_disque(fix2+2, 45, 90, -1);
+    demi_attache_disque(fix2-2, 45, 90, -1);
+
+    _rouleau(length-4, 160);
+  }
+}
+
+module _rouleau_double(fix1=70, fix2=-70, length=200, xswitch=0){
+  translate([xswitch, 0, 0]){
+    te_double_rouleau(-length/2);
+    poutre_disques(145, 36.5, length);
+    te_double_rouleau( length/2);
+
+    _rouleau(length-4, 140);
+    _rouleau(length-4, 180);
+  }
   demi_attache_disque(fix1+2, 45, 90, -1);
   demi_attache_disque(fix1-2, 45, 90, -1);
   demi_attache_disque(fix2+2, 45, 90, -1);
   demi_attache_disque(fix2-2, 45, 90, -1);
-
-  _rouleau(length-4, 160);
-}
-
-module _rouleau_double(fix1=70,fix2=-70,length=200){
-  te_double_rouleau(-length/2);
-  poutre_disques(145, 36.5, length);
-  te_double_rouleau( length/2);
-
-  demi_attache_disque(fix1+2, 45, 90, -1);
-  demi_attache_disque(fix1-2, 45, 90, -1);
-  demi_attache_disque(fix2+2, 45, 90, -1);
-  demi_attache_disque(fix2-2, 45, 90, -1);
-
-  _rouleau(length-4, 140);
-  _rouleau(length-4, 180);
 }
 
 module _semiport_arriere(){
