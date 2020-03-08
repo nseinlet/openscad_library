@@ -4,13 +4,12 @@ module pointe_soc() {
   difference() {
     union() {
       translate([0,8,41]) cube([2,8,50], center=true);
+      /* hull() {
+        translate([0,-6,1]) cube([2,10,0.1], center=true);
+        translate([0,3,2]) cube([2,6,0.1], center=true);
+      }; */
       hull() {
-        translate([0,-6,0]) cube([2,30,0.1], center=true);
-        translate([0,3,4]) cube([2,10,0.1], center=true);
-      };
-      hull() {
-
-        translate([0,3,4]) cube([2,10,0.1], center=true);
+        translate([0,3,2]) cube([2,6,0.1], center=true);
         translate([0,8,16]) cube([2,8,0.1], center=true);
       };
     };
@@ -42,7 +41,7 @@ module ailette_large() {
 }
 
 module ailette() {
-  translate([0,0,5]) rotate(10,[1,0,0]) difference() {
+  translate([0,0,3]) rotate(5,[1,0,0]) difference() {
     union(){
       hull() {
         translate([0,-22,0]) cube([0.1,0.1,2], center=true);
@@ -59,7 +58,7 @@ module ailette() {
       translate([0,0,0]) cube([5,0.1,3], center=true);
       translate([0,13,0]) cube([10,0.1,3], center=true);
     } */
-    cube([2,5,5], center=true);
+    cube([2,10,5], center=true);
   }
 }
 
@@ -314,7 +313,7 @@ module te_disque(x){
   }
 }
 
-module disque_rouleau(x,y,diameter, inner_ray=4) {
+module disque_rouleau(x, y, diameter, inner_ray=4) {
   translate([x,y,diameter/2]) rotate(90,[0,1,0]) difference() {
     hull(){
       cylinder(r=diameter/2-5, h=2, center=true);
