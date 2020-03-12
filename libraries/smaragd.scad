@@ -325,6 +325,9 @@ module disque_rouleau(x, y, diameter, inner_ray=4) {
     for(angl=[0:45:360]){
           rotate(angl, [0,0,1]) translate([0, diameter/2, 0]) cylinder(r=1.5, h=3, center=true);
     }
+    for(angl=[22.5:45:360]){
+          rotate(angl, [0,0,1]) translate([0, diameter-8.8, 0]) cylinder(r=(diameter/2)-7, h=3, center=true);
+    }
   }
 }
 
