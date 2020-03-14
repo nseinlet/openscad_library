@@ -12,7 +12,21 @@ include <any_element_of_libraries.scad>
 
 ## crosskill
 
+## Low loader
+
+A simple low loader trailer.
+```
+include <low_loader.scad>
+
+$fn=50;
+low_loader();
+```
+
 ## packomat
+
+## Servos
+
+Some servos, to easily check space in designs
 
 ## Smaragd
 
