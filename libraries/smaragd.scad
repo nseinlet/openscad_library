@@ -335,11 +335,13 @@ module te_double_rouleau(x) {
   translate([x, 160, 29]) difference() {
     union() {
       hull() {
-        translate([0, -15, 8]) cube([2, 5, 5], center=true);
+        translate([0, -15, 7]) cube([2, 5, 5], center=true);
         translate([0,0,-14]) cube([2, 10, 8], center=true);
       }
       translate([0,0,-14]) cube([2, 50, 8], center=true);
     }
+    //Axe
+    translate([0, -15, 7]) rotate(90,[0,1,0]) cylinder(r=1, h=3, center=true);
     //Support disques
     translate([0, 20, -14]) rotate(90,[0,1,0]) cylinder(r=1.5, h=3, center=true);
     translate([0, -20, -14]) rotate(90,[0,1,0]) cylinder(r=1.5, h=3, center=true);
@@ -352,6 +354,8 @@ module te_simple_rouleau(x) {
       translate([0, -15, 8]) cube([2, 5, 5], center=true);
       translate([0,0,-14]) cube([2, 10, 8], center=true);
     }
+    //Axe
+    translate([0, -15, 7]) rotate(90,[0,1,0]) cylinder(r=1, h=3, center=true);
     //Support disques
     translate([0, 0, -14]) rotate(90,[0,1,0]) cylinder(r=1.5, h=3, center=true);
   }
