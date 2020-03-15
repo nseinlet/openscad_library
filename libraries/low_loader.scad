@@ -13,16 +13,16 @@ module low_loader() {
       profile_carre(10, 281, true);
       translate([10, 10, 0]) profile_carre(6, 261, false);
       //Rear
-      translate([0, 281, 0]) rotate(90, [0, 0, -1]) profile_carre(10, 165, true);
+      translate([0, 281, 0]) rotate(90, [0, 0, -1]) profile_carre(10, 170, true);
       //Left
-      translate([155, 10, 0]) mirror([1, 0, 0]) profile_carre(6, 261, false);
-      translate([165, 0, 0]) mirror([1, 0, 0]) profile_carre(10, 281, true);
+      translate([160, 10, 0]) mirror([1, 0, 0]) profile_carre(6, 261, false);
+      translate([170, 0, 0]) mirror([1, 0, 0]) profile_carre(10, 281, true);
       //Center
       translate([80, 10, 0]) mirror([1, 0, 0]) profile_carre(6, 261, false);
       translate([80, -79, 0]) profile_carre(10, 350, false);
       translate([90, 10, 0]) profile_carre(6, 261, false);
       //Front
-      translate([165, 0, 0]) rotate(90, [0, 0, 1]) profile_carre(10, 165, true);
+      translate([170, 0, 0]) rotate(90, [0, 0, 1]) profile_carre(10, 170, true);
       //Support servos
       translate([117, 271, -2]) difference() {
         rotate(90, [0, -1, 0]) profile_l(20, 65, thickness=2);
