@@ -2,7 +2,7 @@ include <servo.scad>
 include <profiles.scad>
 
 module _servo_cut() {
-  translate([1.5, 37, 12]) cube([3, 40, 20], center=true);
+  translate([1.5, 33, 10.5]) cube([3, 32, 17], center=true);
   translate([1.5, 5, 7]) cube([3, 10, 10], center=true);
 }
 
@@ -25,16 +25,39 @@ module low_loader() {
       translate([170, 0, 0]) rotate(90, [0, 0, 1]) profile_carre(10, 170, true);
       //Support servos
       translate([117, 271, -2]) difference() {
-        rotate(90, [0, -1, 0]) profile_l(20, 65, thickness=2);
+        rotate(90, [0, -1, 0]) profile_l(20, 57, thickness=2);
         translate([-2.5, 0, 0]) _servo_cut();
       };
       translate([53, 271, -2]) difference() {
-        profile_l(20, 65, thickness=2);
+        profile_l(20, 57, thickness=2);
         _servo_cut();
       };
       //Servos
-      translate([58, 288, 20]) rotate(90, [-1, 0, 0]) rotate(90, [0, -1, 0]) servo_powerhd_1501mg();
-      translate([112, 288, 0]) rotate(90, [-1, 0, 0]) rotate(180, [0, 0, 1]) rotate(90, [0, -1, 0]) servo_powerhd_1501mg();
+      translate([58, 288, 16]) rotate(90, [-1, 0, 0]) rotate(90, [0, -1, 0]) servo_turnigy_tgy225mg();
+      translate([112, 288, 0]) rotate(90, [-1, 0, 0]) rotate(180, [0, 0, 1]) rotate(90, [0, -1, 0]) servo_turnigy_tgy225mg();
     }
+  }
+}
+
+module corner_join(inner_size, length) {
+  difference(){
+    union(){
+      cube([inner_size, length, inner_size]);
+      cube([length, inner_size, inner_size]);
+    }
+    for(pos=[inner_size*2:10:length]) {
+      translate([inner_size/2, pos, -0.5]) cylinder(r=1.1, h=inner_size+1);
+      translate([pos, inner_size/2, -0.5]) cylinder(r=1.1, h=inner_size+1);
+    }
+  }
+}
+
+module cross_join(inner_size, profile_width) {
+  difference(){
+    union(){
+      translate([profile_width, 0, 0]) cube([inner_size, inner_size+2*profile_width, inner_size/2]);
+      translate([0, profile_width, inner_size/2]) cube([inner_size+2*profile_width, inner_size, inner_size/2]);
+    }
+    translate([inner_size/2+profile_width, inner_size/2+profile_width, -0.5]) cylinder(r=1.1, h=inner_size+1);
   }
 }
