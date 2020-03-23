@@ -12,6 +12,8 @@ module _soc(x,y){
 
 module _double_disque(x) {
   te_disque(x);
+  disque_egaliseur(x+6,0);
+  disque_egaliseur(x-6,-15);
 }
 
 module _3points(){

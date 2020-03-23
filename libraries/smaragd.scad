@@ -313,6 +313,13 @@ module te_disque(x){
   }
 }
 
+module disque_egaliseur(x,y) {
+  translate([x,107+y,19]) rotate(90,[0,1,0]) difference(){
+    cylinder(r=13, h=2, center=true);
+    cylinder(r=3, h=2.2, center=true);
+  }
+}
+
 module disque_rouleau(x, y, diameter, inner_ray=4) {
   translate([x,y,diameter/2]) rotate(90,[0,1,0]) difference() {
     hull(){
