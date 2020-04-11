@@ -282,14 +282,14 @@ module large_frame(length=200) {
   }
 }
 
-module small_frame() {
+module small_frame(size=86) {
   union() {
     //Poutres
-    translate([16, 0, 55]) cube([86, 8, 8], center=true);
-    translate([16, 56, 55]) cube([86, 8, 8], center=true);
+    translate([(size/2)-27, 0, 55]) cube([size, 8, 8], center=true);
+    translate([(size/2)-27, 56, 55]) cube([size, 8, 8], center=true);
     //Traverses
     translate([-26, 28, 55]) attache_girder();
-    translate([ 60, 28, 55]) attache_girder();
+    translate([size-26, 28, 55]) attache_girder();
   }
 }
 

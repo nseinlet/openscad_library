@@ -70,19 +70,20 @@ module _middle_frame(x, y) {
   }
 }
 
-module _small_frame(x, y, reversed=0) {
+module _small_frame(x, y, reversed=0, size=86) {
   translate([x,y,0]) mirror([reversed,0,0]) union() {
-    small_frame();
+    small_frame(size);
     //Attaches socs
-    demi_attache_soc(-13-2, 0);
-    demi_attache_soc(-13+2, 0);
-    _soc(-13,0);
-    demi_attache_soc( 16-2, 56);
-    demi_attache_soc( 16+2, 56);
-    _soc(16,56);
-    demi_attache_soc( 45-2, 0);
-    demi_attache_soc( 45+2, 0);
-    _soc(45,0);
+    for (x=[-13:58:size-20]){
+      demi_attache_soc(x-2, 0);
+      demi_attache_soc(x+2, 0);
+      _soc(x,0);
+    }
+    for (x=[16:58:size-13]){
+      demi_attache_soc( x-2, 56);
+      demi_attache_soc( x+2, 56);
+      _soc(x,56);
+    }
   }
 }
 
