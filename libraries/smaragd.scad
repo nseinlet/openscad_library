@@ -107,11 +107,11 @@ module base_3emepoint(x){
     translate([x,-4,55]) difference() {
       union() {
         hull() {
-          translate([0, 0, 4]) rotate(90,[0,1,0]) cylinder(h=2, r=8, center=true);
+          translate([0, 0, -2]) rotate(90,[0,1,0]) cylinder(h=2, r=8, center=true);
           translate([0, 0, 8]) rotate(90,[0,1,0]) cylinder(h=2, r=8, center=true);
         };
       };
-      translate([0, 0, 10]) rotate(90,[0,1,0]) cylinder(r=1.5, h=3, center=true);
+      translate([0, 0, 10]) rotate(90,[0,1,0]) cylinder(r=1, h=3, center=true);
       translate([0, 4, 0]) cube([3, 8, 8], center=true);
     }
 }
