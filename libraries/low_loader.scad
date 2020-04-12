@@ -61,3 +61,27 @@ module cross_join(inner_size, profile_width) {
     translate([inner_size/2+profile_width, inner_size/2+profile_width, -0.5]) cylinder(r=1.1, h=inner_size+1);
   }
 }
+
+module wheel_support() {
+  difference() {
+    union(){
+      translate([0,0,10]) cylinder(r=6, h=10);
+      hull() {
+          //Main axle
+          cylinder(r=6, h=10);
+          translate([20,0,0]) cylinder(r=6, h=10);
+      }
+    }
+    //Wheel axle
+    cylinder(r=3.5, h=20);
+    //Servo fixing
+    hull() {
+      translate([16,0,0]) cylinder(r=4, h=2.5);
+      translate([30,0,0]) cylinder(r=4, h=2.5);
+    }
+    hull() {
+      translate([15,0,2.5]) cylinder(r=3, h=4.5);
+      translate([30,0,2.5]) cylinder(r=3, h=4.5);
+    }
+  }
+}
