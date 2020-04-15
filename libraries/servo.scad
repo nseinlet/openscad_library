@@ -1,29 +1,48 @@
-module servo_powerhd_1501mg() {
+/*
+                  G                                                         D
+              |--------|                              |---------------------------------------------|
+  _    _              | |                                                                               _
+  |    |      ----------------------------            -----------------------------------------------   |
+  |    | C    |                          |            |     |                                  |    |   |
+  |    _  -----------------------------------         |  O  |                                  |  O |   |  E
+  |       |                                 |      _  |  O  |                                  |  O |   |
+A |    _  -----------------------------------    F |  |     |                                  |    |   |
+  |    |      |                          |         _  -----------------------------------------------   _
+  |    |      |                          |
+  |  B |      |                          |            |-----|
+  |    |      |                          |               H
+  |    |      |                          |
+  _    _      ----------------------------
+
+
+
+ */
+
+
+module _generic_servo(a, b, c, d, e, f, g, h) {
   difference(){
     union(){
-      translate([0, 0, 2.5]) cube([40, 20, 8]);
-      translate([-7, 0, 0]) cube([52, 20, 2.5]);
-      translate([0, 0, -26]) cube([40, 20, 26]);
-      translate([10, 10, 10.5]) cylinder(r=3, h=6);
+      translate([0, 0, a-b-c]) cube([d-2*h, e, c]);
+      translate([-h, 0, 0]) cube([d, e, 2.5]);
+      translate([0, 0, -b]) cube([d-2*h, e, b]);
+      translate([g, e/2, a-b]) cylinder(r=3, h=6);
     }
-    translate([-5, 5, -0.25]) cylinder(r=2.3, h=3);
-    translate([-5, 15, -0.25]) cylinder(r=2.3, h=3);
-    translate([43, 5, -0.25]) cylinder(r=2.3, h=3);
-    translate([43, 15, -0.25]) cylinder(r=2.3, h=3);
+    translate([2-h, f, -0.25]) cylinder(r=2.3, h=3);
+    translate([2-h, e-f, -0.25]) cylinder(r=2.3, h=3);
+    translate([d-h-2, f, -0.25]) cylinder(r=2.3, h=3);
+    translate([d-h-2, e-f, -0.25]) cylinder(r=2.3, h=3);
   }
 }
 
+
+module servo_powerhd_1501mg() {
+  _generic_servo(36.5, 26, 8, 52, 20, 5, 10, 6);
+}
+
 module servo_turnigy_tgy225mg() {
-  difference(){
-    union(){
-      translate([0, 0, 2.5]) cube([32, 16, 5]);
-      translate([-6, 0, 0]) cube([44, 16, 2.5]);
-      translate([0, 0, -22]) cube([32, 16, 22]);
-      translate([10, 8, 7.5]) cylinder(r=3, h=6);
-    }
-    translate([-4, 4, -0.25]) cylinder(r=2.3, h=3);
-    translate([-4, 12, -0.25]) cylinder(r=2.3, h=3);
-    translate([36, 4, -0.25]) cylinder(r=2.3, h=3);
-    translate([36, 12, -0.25]) cylinder(r=2.3, h=3);
-  }
+  _generic_servo(29.5, 22, 5, 44, 20, 4, 8, 6);
+}
+
+module servo_9g() {
+  _generic_servo(27, 15, 8.5, 32.5, 12, 6,6, 4.8);
 }
