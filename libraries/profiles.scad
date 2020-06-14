@@ -5,13 +5,17 @@ module profile_l(size, length, thickness=1) {
   }
 }
 
-module profile_carre(size, length, 45cut=false){
+module profile_carre(size, length, cut=false, angle_cut=45, cut_bevel=false){
   difference(){
     cube([size, length, size]);
     translate([1, 0, 1] ) cube([size-2, length, size-2]);
-    if (45cut){
-      translate([0, length, 0]) rotate(45, [0, 0, -1]) cube([size*2,size,size]);
-      rotate(45, [0, 0, 1]) translate([0, -size, 0]) cube([size*2,size,size]);
+    if (cut){
+      translate([0, length, 0]) rotate(angle_cut, [0, 0, -1]) cube([size*2,size,size]);
+      rotate(angle_cut, [0, 0, 1]) translate([0, -size, 0]) cube([size*2,size,size]);
+    }
+    if (cut_bevel){
+      translate([0, length, 0]) rotate(angle_cut, [1, 0, 0]) cube([size, size, size*2]);
+      translate([0, 0, size]) rotate(angle_cut, [1, 0, 0]) translate([0, -size, -size-4]) cube([size, size, size*2]);
     }
   }
 }
