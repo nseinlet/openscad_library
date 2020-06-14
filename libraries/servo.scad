@@ -23,7 +23,7 @@ module _generic_servo(a, b, c, d, e, f, g, h) {
   difference(){
     union(){
       translate([0, 0, a-b-c]) cube([d-2*h, e, c]);
-      translate([-h, 0, 0]) cube([d, e, 2.5]);
+      translate([-h, 0, 0]) cube([d, e, a-b-c]);
       translate([0, 0, -b]) cube([d-2*h, e, b]);
       translate([g, e/2, a-b]) cylinder(r=3, h=6);
     }
