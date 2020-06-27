@@ -74,6 +74,8 @@ module arm_ploughshare_support(){
       };
       translate([0, -20, 50]) rounded_cube(2, 6, 16, 2);
     };
+    //Girder fix
+    translate([0, -2, 62]) rotate(90, [0, 1, 0]) cylinder(r=1.5, h=3, center=true);
     //Tractor fix
     translate([0, -20, 56.5]) rotate(90, [0, 1, 0]) cylinder(r=1.5, h=3, center=true);
     translate([0, -20, 51]) rotate(90, [0, 1, 0]) cylinder(r=1.5, h=3, center=true);
@@ -251,22 +253,23 @@ module _half_combiplow() {
   /* outer_arm_fix(1.5); */
   /* outer_arm_fix(-7.2); */
   arm_ploughshare_support();
-  arm();
-  arm_support();
+  //arm();
+  //arm_support();
   arm_support_link();
   middle_ploughshare_support();
-  _ploughshare(30);
-  _ploughshare(77);
+  //_ploughshare(30);
+  //_ploughshare(77);
 
   foot_support();
-  foot();
-  foot_counter_support();
+  //foot();
+  //foot_counter_support();
 }
 
 //4m combiplow
 module extend_fixture(){
     translate([81.2, -2, 62]) difference(){
       rounded_cube(2, 14, 20, 2);
+      rotate(90, [0, 1, 0]) cylinder(r=1.5, h=3, center=true);
       for (y=[-3.5,3.5]){
         for (z=[-8,8]){
           translate([0, y, z]) rotate(90, [0, 1, 0]) cylinder(r=1, h=3, center=true);
