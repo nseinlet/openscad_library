@@ -157,8 +157,8 @@ module _rouleau_double(fix1=70, fix2=-70, length=200, xswitch=0){
 }
 
 module _semiport_arriere(){
-  semiport_arriere_bas(-4);
-  semiport_arriere_bas(4);
+  semiport_arriere_bas(-14);
+  semiport_arriere_bas(14);
   semiport_arriere_haut(6);
   semiport_arriere_haut(-6, 1);
   semiport_arriere_axe();

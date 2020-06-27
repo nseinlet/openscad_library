@@ -441,9 +441,9 @@ module semiport_avant_bas(){
 
 module semiport_arriere_bas(x){
   translate([x, 140, 55]) difference(){
-      cube([2, 160, 8], center=true);
-    translate([0,25,0]) rotate(90,[0,1,0]) cylinder(r=1,h=3, center=true);
-    translate([0,76,0]) rotate(90,[0,1,0]) cylinder(r=1.5,h=3, center=true);
+      cube([8, 160, 8], center=true);
+    translate([0, 25, 0]) rotate(90, [0, 1, 0]) cylinder(r=1  , h=9, center=true);
+    translate([0, 76, 0]) rotate(90, [0, 1, 0]) cylinder(r=1.5, h=9, center=true);
   }
 }
 
