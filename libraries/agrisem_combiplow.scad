@@ -232,6 +232,7 @@ module foot_counter_support(x=73) {
     rotate(90, [0, 1, 0]) cylinder(r=1, h=3, center=true);
   }
 }
+
 module foot_support() {
   union(){
     foot_counter_support(x=69);
@@ -253,8 +254,8 @@ module _half_combiplow() {
   /* outer_arm_fix(1.5); */
   /* outer_arm_fix(-7.2); */
   arm_ploughshare_support();
-  //arm();
-  //arm_support();
+  arm();
+  arm_support();
   arm_support_link();
   middle_ploughshare_support();
   //_ploughshare(30);

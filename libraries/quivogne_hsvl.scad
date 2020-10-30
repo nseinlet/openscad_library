@@ -152,6 +152,17 @@ module half_thirdpoint(){
   }
 }
 
+module thirdpoint_standrecross(){
+  translate([0, -54.5, 55]) hull(){
+    cube([31, 2, 0.1], center=true);
+    translate([0, 0, 4]) cube([21, 2, 0.1], center=true);
+  }
+}
+
+module thirdpoint_flat(){
+  translate([0, -56.5, 67]) cube([6, 8, 2], center=true);
+}
+
 module thirdpoint_central_fixture(pos_x){
   translate([pos_x, -53.3, 70]) rotate(50, [1,0,0]) difference(){
     rounded_cube(2, 5, 14, 1);
@@ -166,6 +177,8 @@ module thirdpoint_central_fixture_girder(){
 module _thirdpoint(){
   half_thirdpoint();
   mirror([1,0,0]) half_thirdpoint();
+  thirdpoint_standrecross();
+  thirdpoint_flat();
 }
 
 module rack_vertical_support() {
@@ -339,24 +352,24 @@ module _extend_large(){
 module _main_frame(){
   main_frame_girder (-5.5);
   main_frame_girder (-48);
-  warnsign_girder();
-  _thirdpoint();
-  thirdpoint_central_fixture_girder();
+  //warnsign_girder();
+  //_thirdpoint();
+  //thirdpoint_central_fixture_girder();
 
   for(mult=[1,-1]){
     thirdpoint_rear_fix(mult*3);
-    thirdpoint_central_fixture(mult*6);
+    //thirdpoint_central_fixture(mult*6);
     transversal_girder(mult*23);
     inner_arm(mult*23);
     outer_arm(mult*31.5);
-    girder_vertical_support(mult*35);
+    //girder_vertical_support(mult*35);
     girder_support(mult*35);
     girder_support_support(mult*35);
-    _rack(mult*35);
+    //_rack(mult*35);
     foot_support(mult*35.5);
-    foot(mult*35.5);
-    warnsign_support(mult*43);
-    warnsign_support_girder(mult*43);
+    //foot(mult*35.5);
+    //warnsign_support(mult*43);
+    //warnsign_support_girder(mult*43);
     thirdpoint_rear_fix(mult*49);
     transversal_girder(mult*62);
     for (pos_y=[-51.5,-44.5,-9,-2]){
