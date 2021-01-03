@@ -221,6 +221,13 @@ module foot() {
   translate([70, 20, 0]) rotate(10, [1, 0, 0]) cube([2, 6, 85]);
 }
 
+module foot_3dprint() {
+  translate([70, 20, 0]) union() {
+      rotate(10, [1, 0, 0]) cube([2, 6, 85]);
+      translate([1, 5, 1]) rotate(90, [0,1,0]) rounded_cube(3, 10, 10, 2);
+  }
+}
+
 module foot_counter_support(x=73) {
   translate([x, 12.5, 65]) rotate(10, [1, 0, 0]) difference(){
     rounded_cube(2, 12, 12,2);
@@ -258,8 +265,8 @@ module _half_combiplow() {
   arm_support();
   arm_support_link();
   middle_ploughshare_support();
-  //_ploughshare(30);
-  //_ploughshare(77);
+  _ploughshare(30);
+  _ploughshare(77);
 
   foot_support();
   //foot();
