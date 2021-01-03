@@ -1,3 +1,5 @@
+include <tools.scad>
+
 module attache(rot) {
 	rotate(rot, [0, 0, 1])
     union()
@@ -209,32 +211,62 @@ module _3points_barre_fixe(){
 	3points_barre_fixe_girder();
 	for (mult=[1,-1]){
 	  translate([mult*3 , 0, 0]) 3points_barre_fixe_haut();
-	  translate([mult*22, -34, 18]) 3points_barre_fixe_u();
-	  translate([mult*22, -34, 26.2]) rotate(180,[1, 1, 0]) 3points_barre_fixe_u();
+	  translate([mult , 0, 0]) 3points_barre_fixe_bas();
+	  translate([mult*22, -39, 12.5]) 3points_barre_fixe_u();
+	  translate([mult*22, -39, 20.8]) rotate(180,[1, 1, 0]) 3points_barre_fixe_u();
   }
+}
+
+module 3points_barre_fixe_bas(){
+	difference(){
+		union(){
+			translate([0, 0, 27]) cube([2, 70, 8], center=true);
+			translate([0, -39, 18.5]) cube([2, 8, 25], center=true);
+			translate([0, 0, 27]) rotate(90, [0,1,0]) cylinder(h=2, r=10, center=true);
+		}
+		//Rotation axle
+		translate([0, 0, 27]) rotate(90, [0,1,0]) cylinder(h=2.5, r=6.1, center=true);
+		//Lower girder
+		translate([0, -39, 10.5]) cube([2.5, 5.3, 5.3], center=true);
+        //mudfree girder
+		translate([0, -32, 27]) cube([2.5, 5.3, 5.3], center=true);
+	}
 }
 
 module 3points_barre_fixe_haut(){
 	difference(){
 		union(){
-			translate([0, 0, 27]) cube([2, 60, 8], center=true);
-			translate([0, -34, 43]) cube([2, 8, 60], center=true);
-			translate([0, 0, 27]) rotate(90, [0,1,0]) cylinder(h=2, r=10, center=true);
+			3points_barre_fixe_bas();
+			translate([0, -39, 50]) cube([2, 8, 48], center=true);
 			hull(){
 				translate([0, 10, 27]) cube([2, 6, 6], center=true);
 				translate([0, -34, 63]) cube([2, 6, 6], center=true);
 			}
 		}
 		//Rotation axle
-		translate([0, 0, 27]) rotate(90, [0,1,0]) cylinder(h=2.5, r=6, center=true);
-		//Lower girder
-		translate([0, -34, 17.5]) cube([2.5, 5, 5], center=true);
-
+		translate([0, 0, 27]) rotate(90, [0,1,0]) cylinder(h=2.5, r=6.1, center=true);
+		//third point
+		for(posz=[50:5:70]) translate([0, -39, posz]) rotate(90, [0,1,0]) cylinder(h=2.5, r=1.5, center=true);
 	}
 }
 
+module mufree_girder(length){
+  translate([0, -32, 27]) cube([length, 5, 5], center=true);
+}
+
+module mudfree_arrow(pos_x){
+	translate([pos_x, -32, 27]) difference(){
+	   union(){
+		   rounded_cube(2, 10, 10, 2);
+		   translate([0, 3, -2.5]) rounded_cube(2, 10, 5, 2);
+
+	   };
+	   cube([2, 5.3, 5.3], center=true);
+	};
+}
+
 module 3points_barre_fixe_girder(){
-	translate([0, -34, 17.5]) difference() {
+	translate([0, -39, 10.5]) difference() {
 		cube([50, 5, 5], center=true);
 		translate([ 22, 0, 0]) rotate(90, [1, 0, 0]) cylinder(r=1.25, h=6, center=true);
 		translate([-22, 0, 0]) rotate(90, [1, 0, 0]) cylinder(r=1.25, h=6, center=true);
@@ -245,10 +277,18 @@ module 3points_barre_fixe_u(){
 	difference() {
 		hull(){
 		  translate([0, 0, 3.5]) cube([6, 8, 1], center=true);
-			translate([0, 0,   0]) rotate(90, [1, 0, 0]) cylinder(r=2.75, h=8, center=true);
+		  translate([0, 0, -2]) rotate(90, [1, 0, 0]) cylinder(r=2.75, h=8, center=true);
 	  }
-		translate([0, 0, -0.5]) cube([6, 6, 7], center=true);
-		translate([0, 0, -0.5]) rotate(90, [1, 0, 0]) cylinder(r=1.25, h=8.5, center=true);
-		translate([0, 0, 3.5]) rotate(90, [0, 0, 0]) cylinder(r=1.5, h=2, center=true);
+		translate([0, 0, -1.3]) cube([6, 6, 7], center=true);
+		translate([0, 0, -2]) rotate(90, [1, 0, 0]) cylinder(r=1.25, h=8.5, center=true);
+		translate([0, 0, 3.5]) rotate(90, [0, 0, 0]) cylinder(r=1.5, h=6, center=true);
 	};
+}
+
+module warn_girder(length){
+	translate([0, 36, 27]) union(){
+		cube([length-40, 2, 4], center=true);
+		cube([8, 2, 8], center=true);
+		for (mult=[1,-1]) translate([mult*(length/2-10),0,0]) rotate(90,[0,0,1]) rounded_cube(2,20,20, 2);
+	}
 }
