@@ -338,6 +338,27 @@ module disque_rouleau(x, y, diameter, inner_ray=4) {
   }
 }
 
+module disque_rouleau_barre(x, y, diameter, inner_ray=4) {
+  translate([x,y,diameter/2]) rotate(90,[0,1,0]) difference() {
+    hull(){
+      cylinder(r=diameter/2-5, h=2, center=true);
+      for(angl=[0:45:360]){
+          rotate(angl, [0,0,1]) translate([0, (diameter/2)-1, 0]) cylinder(r=1.5, h=2, center=true);
+      }
+    }
+    cylinder(r=min(inner_ray,8), h=3, center=true);
+    for(angl=[0:45:360]){
+          rotate(angl, [0,0,1]) translate([0, diameter/2, 0]) hull() {
+              cylinder(r=1.5, h=3, center=true);
+              translate([0,-2,0]) cylinder(r=1.5, h=3, center=true);
+          };
+    }
+    for(angl=[22.5:45:360]){
+          rotate(angl, [0,0,1]) translate([0, diameter-8.8, 0]) cylinder(r=(diameter/2)-7, h=3, center=true);
+    }
+  }
+}
+
 module te_double_rouleau(x) {
   translate([x, 160, 29]) difference() {
     union() {

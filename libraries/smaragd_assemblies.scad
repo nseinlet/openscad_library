@@ -126,6 +126,19 @@ module _rouleau(length, y) {
   }
 }
 
+module _rouleau_barre(length, y) {
+  diameter = 30;
+  for(angl=[0:45:360]){
+    translate([0, y, diameter/2])  rotate(angl, [1,0,0]) translate([0, diameter/2, 0]) rotate(90,[0,1,0]) cube([2,3,length], center=true);
+  }
+  for(x=[(length/2)-10:-29:0]){
+    inner_ray = x>=(length/2)-15?4:10;
+    disque_rouleau_barre(x, y, diameter, inner_ray);
+    disque_rouleau_barre(-x, y, diameter, inner_ray);
+
+  }
+}
+
 module _rouleau_simple(fix1=70, fix2=-70, length=200, xswitch=0){
   translate([xswitch, 0, 0]){
     te_simple_rouleau(-length/2);
@@ -147,7 +160,7 @@ module _rouleau_double(fix1=70, fix2=-70, length=200, xswitch=0){
     poutre_disques(145, 36.5, length);
     te_double_rouleau( length/2);
 
-    _rouleau(length-4, 140);
+    _rouleau_barre(length-4, 140);
     _rouleau(length-4, 180);
   }
   demi_attache_disque(fix1+2, 45, 90, -1);
