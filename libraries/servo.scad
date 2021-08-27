@@ -43,6 +43,25 @@ module servo_turnigy_tgy225mg() {
   _generic_servo(29.5, 22, 5, 44, 20, 4, 8, 6);
 }
 
+module servo_turnigy_tgys712g() {
+    difference(){
+      union(){
+        translate([-6, 4, 0]) cube([42, 2, 8]);
+        translate([10, 4, -36]) cube([10, 2, 8]);
+        translate([0, 0, -28]) cube([30, 10, 36]);
+        translate([8, 5, 7.5]) cylinder(r=3, h=6);
+      }
+      //translate([2-6, 4, -0.25]) cylinder(r=2.3, h=3);
+      //translate([2-6, 10-4, -0.25]) cylinder(r=2.3, h=3);
+      //translate([44-6-2, 4, -0.25]) cylinder(r=2.3, h=3);
+      //translate([44-6-2, 10-4, -0.25]) cylinder(r=2.3, h=3);
+    }
+}
+
+module servo_turnigy_tgy811mg() {
+  _generic_servo(35, 26.6, 3, 42, 10, 1, 8, 6);
+}
+
 module servo_9g() {
   _generic_servo(27, 15, 8.5, 32.5, 12, 6,6, 4.8);
 }
