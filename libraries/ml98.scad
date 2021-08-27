@@ -245,7 +245,7 @@ for (mult=[1,-1]) {
      parallel_girder(mult*tmp_z);
      rotate_around_axle(0, 135, 124, 56, -1, 0, 0) translate([mult*29, 220, 122]) rotate([180, 180, 90]) n20_folded(30);
   };
-  for (pos_x=[24,34]) {
+  for (pos_x=[34]) {
     cylinder_fix(mult*pos_x);
   };
   for (tmp_z=[26:2:32])fixation_chassis(mult*tmp_z);
@@ -272,7 +272,7 @@ for (mult=[1,-1]) {
     rotate_around_axle(0, 136, 123, 56, -1, 0, 0) translate([mult*29,221,122]) rotate([180, 180, 90]) n20_folded(30);
     //translate([mult*29,136,123]) rotate(90, [0, 1, 0]) cylinder(r=2, h=21, center=true);
   };
-  for (pos_x=[24,34]) {
+  for (pos_x=[34]) {
     cylinder_fix(mult*pos_x);
   };
   for (tmp_z=[26:2:32])fixation_chassis(mult*tmp_z);
@@ -301,10 +301,48 @@ for (mult=[1,-1]) {
     rotate_around_axle(0, 132.4, 109.5, 54, -1, 0, 0) translate([mult*29, 247, 109.5]) rotate([180, 180, 90]) n20_unfolded(30);
     //translate([mult*29, 132.4, 109.5]) rotate(90, [0, 1, 0]) cylinder(r=2, h=21, center=true);
   };
-  for (pos_x=[24,34]) {
+  for (pos_x=[34]) {
     cylinder_fix(mult*pos_x);
   };
   for (tmp_z=[26:2:32])fixation_chassis(mult*tmp_z);
   rotate_around_axle(mult*29, cylinder_y, cylinder_z, 78, 1, 0, 0) translate([mult*29, cylinder_y, cylinder_z]) rotate([180, 0, 90]) n20_unfolded(50);
 }
+}
+
+module half_bruder3000_support(){
+  difference() {
+    union() {
+        translate([0, -68  , 33.5]) rounded_cube(2, 10, 27, 2);
+        translate([0,   0  , 13]) rounded_cube(2,22,26,2);
+        translate([0, -11  ,  2.5]) rotate(90,[0,1,0]) cylinder(h=2, r=2.5, center=true);
+        hull(){
+            translate([0, -4, 21]) rounded_cube(2, 17, 10, 2);
+            translate([0, -70.5, 28]) rounded_cube(2,3,16,2);
+        };
+        translate([0,  22  , 10]) cube([2,22,6], center=true);
+        hull() {
+           translate([0,  33  , 10]) rotate(90,[0,1,0]) cylinder(h=2, r=3, center=true);
+           translate([0,  58  ,  -10]) rotate(90,[0,1,0]) cylinder(h=2, r=4, center=true);
+        }
+        hull() {
+           translate([0,  58  ,  -10]) rotate(90,[0,1,0]) cylinder(h=2, r=4, center=true);
+           translate([0,  62  ,  15]) rotate(90,[0,1,0]) cylinder(h=2, r=3, center=true);
+        }
+        hull() {
+           translate([0,  62  ,  15]) rotate(90,[0,1,0]) cylinder(h=2, r=3, center=true);
+           translate([0,  62  ,  30]) rotate(90,[0,1,0]) cylinder(h=2, r=3, center=true);
+        }
+        translate([0,-68,-26]) cylinder_fix(0);
+    }
+    //Transversal fixes
+    translate([0,  3,   2.5]) rotate(90,[0,1,0]) cylinder(h=2.5, r=1.5, center=true);
+    translate([0, 58, -10]) rotate(90,[0,1,0]) cylinder(h=2.5, r=1.5, center=true);
+    translate([0, 62,  15]) rotate(90,[0,1,0]) cylinder(h=2.5, r=1.5, center=true);
+    //Arm fix
+    for (z=[19,30,41]) translate([0, -68, z]) rotate(90,[0,1,0]) cylinder(h=2.5, r=1, center=true);
+  }
+}
+
+module _bruder3000_support(){
+  for (mult=[1,-1]) translate([mult*24, 68, 26]) half_bruder3000_support();
 }
