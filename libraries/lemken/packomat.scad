@@ -289,6 +289,6 @@ module warn_girder(length){
 	translate([0, 36, 27]) union(){
 		cube([length-40, 2, 4], center=true);
 		cube([8, 2, 8], center=true);
-		for (mult=[1,-1]) translate([mult*(length/2-10),0,0]) rotate(90,[0,0,1]) rounded_cube(2,20,20, 2);
+		for (mult=[1,-1]) translate([mult*(length/2-10),0,5]) rotate(90,[0,0,1]) rounded_cube(2,20,20, 2);
 	}
 }

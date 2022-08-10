@@ -45,7 +45,7 @@ module girder_vertical_support(x){
     };
     translate([0, 0, 0]) cube([6, 9, 6], center=true);
     translate([0, 1.2, 1]) rotate(90, [0, 1, 0]) cylinder(r=1, h=10, center=true);
-    #translate([0, 1.2, -12]) rotate(90, [0, 0, 0]) cylinder(r=1, h=10, center=true);
+    translate([0, 1.2, -12]) rotate(90, [0, 0, 0]) cylinder(r=1, h=10, center=true);
   }
 }
 
@@ -58,43 +58,40 @@ module girder_support_limit(x){
 
 
 module inner_arm(pos_x){
-  translate([pos_x, -50, 40]) difference(){
-    union(){
-      hull(){
-        translate([0,-9,-7]) rounded_cube(2, 17, 10, 1);
-        translate([0,-8.5,3.5]) rounded_cube(2, 9, 10, 1);
-      };
+  union() {
+    outer_arm(pos_x);
+    translate([pos_x, -50, 40]) {
       hull(){
         translate([0,-2,-0.9])  cube([2,0.1,5], center=true);
         translate([0,13,-3.4])  cube([2,0.1,0.1], center=true);
       };
+      hull(){
+        translate([0,-2,-10])  cube([2,0.1,3], center=true);
+        translate([0,13,-8.5])  cube([2,0.1,0.1], center=true);
+      };
     };
-    translate([0, -6.5, 0.5]) rotate(90, [0, 1, 0]) cylinder(r=1,h=3,center=true);
-    translate([0, -11, -6]) rotate(90, [0, 1, 0]) cylinder(r=1.5,h=3,center=true);
-    hull(){
-      translate([0, -11, -6]) rotate(90, [0, 1, 0]) cylinder(r=0.8,h=3,center=true);
-      translate([0, -11, -12]) rotate(90, [0, 1, 0]) cylinder(r=2,h=3,center=true);
-    };
-  }
+  };
 }
 
 module outer_arm(pos_x){
-  translate([pos_x, -50, 40]) difference(){
-    union(){
-      translate([0,-9,-7]) rounded_cube(2, 17, 10, 1);
+    translate([pos_x, -50, 40]) difference(){
+        hull(){
+          translate([0,-9,3.5]) rounded_cube(2, 17, 10, 1);
+          translate([0, -5, -7]) rounded_cube(2, 9, 10, 1);
+        };
+      translate([0, -3.5, 4.5]) rotate(90, [0, 1, 0]) cylinder(r=1.6,h=3,center=true);
+      translate([0, -11, 4]) rotate(90, [0, 1, 0]) cylinder(r=2, h=3, center=true);
+      hull(){
+        translate([0, -11, 4]) rotate(90, [0, 1, 0]) cylinder(r=0.8,h=3,center=true);
+        translate([0, -11, -12]) rotate(90, [0, 1, 0]) cylinder(r=2,h=3,center=true);
+      };
     }
-    translate([0, -11, -6]) rotate(90, [0, 1, 0]) cylinder(r=1.5,h=3,center=true);
-    hull(){
-      translate([0, -11, -6]) rotate(90, [0, 1, 0]) cylinder(r=0.8,h=3,center=true);
-      translate([0, -11, -12]) rotate(90, [0, 1, 0]) cylinder(r=2,h=3,center=true);
-    };
-  }
 };
 
 module rotation_plate(pos_x, pos_y){
   translate([pos_x, pos_y ,38]) difference(){
     rotate(90, [0, 0, 1]) rounded_cube(2, 7, 13, 1);
-    translate([0, 0, 3]) rotate(90, [1, 0, 0]) cylinder(r=1.5, h=3, center=true);
+    translate([0, 0, 3]) rotate(90, [1, 0, 0]) cylinder(r=1.7, h=3, center=true);
   }
 }
 
@@ -110,7 +107,7 @@ module thirdpoint_rear_fix(pos_x){
   translate([pos_x, -7.5, 38]) difference(){
     rounded_cube(2, 8, 16, 1);
     translate([0, 2,-4]) cube([3,5,5], center=true);
-    translate([0, 0, 5]) rotate(90, [0,1,0]) cylinder(r=1, h=3, center=true);
+    translate([0, 0, 5]) rotate(90, [0,1,0]) cylinder(r=1.7, h=3, center=true);
   }
 }
 
@@ -183,7 +180,7 @@ module _thirdpoint(){
 module rack_vertical_support() {
     translate([-1.5, 45, 21]) difference(){
       rounded_cube(2, 12, 10, 1);
-      rotate(90, [0,1,0]) cylinder(r=1, h=3, center=true);
+      rotate(90, [0,1,0]) cylinder(r=1.7, h=3, center=true);
     }
 }
 
@@ -206,13 +203,18 @@ difference() {
    };
    translate([15, -27, 15.5])cylinder(r=3, h=2, center=true);
    translate([-25, -27, 15.5])cylinder(r=3, h=2, center=true);
+   //rear girder fix hole
+   translate([0, 48, 15.5])cylinder(r=5, h=2, center=true);
  };
  for (pos=[[-5, -24.3], [5.5, -2.2], [-0.1, 19.9], [-7, 42], [3, 64]]) {
-   translate([pos[0], pos[1], 15.5]) for (x=[-26.5, 8.5, -9,26.2]) {translate([x, 0, 0]) cylinder(r=1.5, h=2.1, center=true);};
+   translate([pos[0], pos[1], 15.5]) for (x=[-26.5, 8.5, -9,26.2]) {translate([x, 0, 0]) cylinder(r=1.7, h=2.1, center=true);};
   };
-  translate([15, -27, 15.5])cylinder(r=1.5, h=2.1, center=true);
-  translate([-25, -27, 15.5])cylinder(r=1.5, h=2.1, center=true);
+  translate([15, -27, 15.5])cylinder(r=1.7, h=2.1, center=true);
+  translate([-25, -27, 15.5])cylinder(r=1.7, h=2.1, center=true);
+  //rear girder fix hole
+  translate([0, 48, 15.5])cylinder(r=1.7, h=2.1, center=true);
  };
+
 };
 
 module rack_counter_girder(pos_x){
@@ -344,12 +346,54 @@ module extend_rotation_girder(y){
       translate([4.25, 0, -2.5]) cube([11.5, 5, 4], center=true);
       translate([-4, 0, 0]) rotate(90, [1, 0, 0]) cylinder(r=2.5, h=5, center=true);
     };
-    translate([-4, 0, 0]) rotate(90, [1, 0, 0]) cylinder(r=1.5, h=6, center=true);
+    translate([-4, 0, 0]) rotate(90, [1, 0, 0]) cylinder(r=1.7, h=6, center=true);
   };
+}
+
+module extend_small_girder(y){
+  translate([100, y, 34]) cube([71, 5, 5], center=true);
+}
+
+module extend_mid_girder(y){
+  translate([133, y, 34]) cube([137, 5, 5], center=true);
 }
 
 module extend_large_girder(y){
   translate([165, y, 34]) cube([201, 5, 5], center=true);
+}
+
+module _extend_small(){
+  for (y=[-5.5, -48]){
+    extend_small_girder(y);
+    extend_rotation_girder(y);
+  }
+  for (pos_y=[-2,-9]){extend_actuator_fix(pos_y);};
+
+  for (x=[67, 133]){transversal_girder(x);};
+  for (x=[105.5]){
+    girder_vertical_support(x);
+    girder_support(x);
+    girder_support_support(x);
+    girder_support_limit(x);
+    _rack(x);
+  };
+}
+
+module _extend_mid(){
+  for (y=[-5.5, -48]){
+    extend_mid_girder(y);
+    extend_rotation_girder(y);
+  }
+  for (pos_y=[-2,-9]){extend_actuator_fix(pos_y);};
+
+  for (x=[67, 133, 198.5]){transversal_girder(x);};
+  for (x=[105.5, 175.5]){
+    girder_vertical_support(x);
+    girder_support(x);
+    girder_support_support(x);
+    girder_support_limit(x);
+    _rack(x);
+  };
 }
 
 module _extend_large(){
@@ -382,7 +426,7 @@ module _main_frame(){
     transversal_girder(mult*23);
     inner_arm(mult*23);
     outer_arm(mult*31.5);
-    //girder_vertical_support(mult*35);
+    girder_vertical_support(mult*35);
     girder_support(mult*35);
     girder_support_support(mult*35);
     //_rack(mult*35);
@@ -390,7 +434,7 @@ module _main_frame(){
     //foot(mult*35.5);
     warnsign_support(mult*43);
     warnsign_support_girder(mult*43);
-    thirdpoint_rear_fix(mult*49);
+    //thirdpoint_rear_fix(mult*49);
     transversal_girder(mult*62);
     for (pos_y=[-51.5,-44.5,-9,-2]){
       rotation_plate(mult*62,pos_y);

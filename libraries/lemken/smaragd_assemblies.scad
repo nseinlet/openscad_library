@@ -1,7 +1,7 @@
 //Underscrore modules are assemblies not designed to be printed/cut
 //Look at smaragd.scad for printed/cutted parts
 
-include <smaragd.scad>
+include <lemken/smaragd.scad>
 
 module _soc(x,y){
     translate([x,y]) union() {

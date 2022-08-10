@@ -393,3 +393,14 @@ module _frame(){
   side_panel(132);
   side_leveller_fixture(133);
 };
+
+module spacer() {
+    difference() {
+        rounded_cube(2, 16, 16, 2);
+        cube([3, 8, 8],center=true);
+        for (mult=[[-1,-1], [-1, 1], [1, 1], [1, -1]]) hull() {
+            translate([0, mult[0]*3, mult[1]*3]) rotate(90, [0, 1, 0]) cylinder(r=1.1, h=3, center=true);
+            translate([0, mult[0]*3.4, mult[1]*3.4]) rotate(90, [0, 1, 0]) cylinder(r=1.1, h=3, center=true);
+        };
+    }
+}
