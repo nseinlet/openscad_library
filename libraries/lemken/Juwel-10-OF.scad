@@ -4,6 +4,10 @@ Lemken Juwel 10 On Field
 
 ************************/
 
+include <motors.scad>
+include <servo.scad>
+
+
 module _motor_housing(){
    translate([0, -0.1,   8]) cube([10, 12, 26], center=true);
    translate([0, -0.1, -13]) cube([10, 10, 16], center=true);
@@ -230,10 +234,10 @@ module main_fixing() {
     }
 };
 
-module _tilted_catcher(withmotor=false) {
+module _tilted_catcher_minilinearservo(withmotor=false) {
  difference() {
    union () {
-      translate([0, 2, 0]) cube(size = [10, 11, 4]);
+      translate([0, 2, 10]) cube(size = [10, 11, 4]);
       hull() {
       		translate([ -5, -4, 10]) cube(size=[15, 8, 8]);
 			    translate([-20, -4, 34]) cube(size=[15, 8, 2]);
@@ -261,27 +265,85 @@ module _tilted_catcher(withmotor=false) {
   };
 };
 
+module _tilted_catcher_contactor(withmotor=false) {
+ difference() {
+   union () {
+      // hull() {
+          translate([0, 2, 10]) cube(size = [10, 11, 2]);
+          translate([-5, 2, 18.8]) cylinder(r=5, h=6);
+      // };
+      hull() {
+      		translate([ -5, -2, 10]) cube(size=[15, 4, 8]);
+			    translate([-20, -2, 34]) cube(size=[30, 4, 0.1]);
+      }
+      hull() {
+      		translate([ -5, 0, 10]) cylinder(r=2, h=2);
+			    translate([-20, 0, 34]) cylinder(r=2, h=0.1);
+      }
+      
+
+      if (withmotor) {
+        //Motor
+        translate([-5, 0, 35]) color("FireBrick") contactor();
+      };
+   };
+   //Motor
+   translate([-5, 0, 35]) contactor();
+   translate([-5, -3.5, 22]) cube([7, 7, 6.5], center=true);
+   //Motor screwing
+   for(posz=[27, 31]) translate([6, 0, posz]) rotate(90, [0, 1, 0]) cylinder(r=1, h=10, center=true);
+  };
+};
+
+module _tilted_catcher_servo9g(withmotor=false) {
+ difference() {
+   union () {
+      // hull() {
+          translate([0, 2, 8]) cube(size = [10, 11, 2]);
+      //    translate([-5, 2, 18.8]) cylinder(r=5, h=6);
+      // };
+      hull() {
+      		translate([ -2, -2, 8]) cube(size=[12, 4, 8]);
+			    translate([-10, -2, 22]) cube(size=[20, 4, 0.1]);
+      }
+      hull() {
+      		translate([ -2, 0, 8]) cylinder(r=2, h=2);
+			    translate([-10, 0, 22]) cylinder(r=2, h=0.1);
+      }
+      
+
+      if (withmotor) {
+        //Motor
+        translate([-10, 18, 10]) rotate(90, [1, 0, 0])color("FireBrick") servo_9g();
+      };
+   };
+   //Servo
+   //translate([-5, 0, 35]) servo_9g();
+  
+  };
+};
+
 module arm_moving_rotation_tuning(){
   difference() {
     union() {
     	cylinder(r=20, h=2);
       translate([25, 5, 1]) cube(size=[30, 20, 2], center=true);
     };
-    cylinder(r=1.5, h=3);
+    translate([0, 0, -0.1]) cylinder(r=1.5, h=3);
     translate([30, -23, 2]) rotate(15, [0, 0, 1]) cube(size = [50, 40, 5], center=true);
     translate([20, -30, 2]) cube(size = [40, 40, 5], center=true);
     translate([30,  28, 2]) rotate(35, [0, 0, -1]) cube(size = [50, 40, 5], center=true);
 
-    for(angle = [8 : 10 : 200]) rotate(angle, [0, 0, -1.5]) translate([0, -18, 0]) cylinder(r=1, h=4);
+    for(angle = [8 : 10 : 200]) rotate(angle, [0, 0, -1.5]) translate([0, -18, -1]) cylinder(r=1, h=4);
   }
 };
 
 module arm_moving_arm() {
   union() {
-	  translate([0, 0, 3]) cube(size = [150, 4, 8]);
+	  translate([0, 0, 3]) cube(size = [150, 3, 8]);
 	  translate([150, 0, 3]) rotate(30, [0, 0, 1]) difference() {
-       cube(size=[20, 4, 8]);
-       translate([10, 0, 4]) rotate(90, [1, 0, 0]) cylinder(r=1.5, h=14, center=true);
+       cube(size=[15, 3, 8]);
+       for (pos=[5, 12]) translate([pos, 0, 4]) rotate(90, [1, 0, 0]) cylinder(r=1, h=14, center=true);
     };
   }
 }
@@ -297,21 +359,14 @@ module _arm_moving(){
 module final_fix(with_motor=false){
  union() {
 	translate([150, 0, 0]) rotate(30, [0, 0, 1]) difference() {
-     cube(size = [20, 4, 14]);
-     translate([10, 0, 7]) rotate(90, [1, 0, 0]) cylinder(r=1.5, h=14, center=true);
+      hull() {
+        translate([0, 0, 3]) cube(size = [20, 2, 8]);
+        translate([10, 0, 3]) cube(size = [10, 2, 8]);
+      };
+      for (pos=[5, 12]) translate([pos, 0, 7]) rotate(90, [1, 0, 0]) cylinder(r=1.25, h=14, center=true);
    };
-   translate([165, -6, 14]) rotate(30, [0,0,1]) mirror([0, 0, 1]) _tilted_catcher(with_motor);
-   translate([165, -6,  0]) rotate(30, [0,0,1]) _tilted_catcher();
-   //Box for servo
-   translate([165, 1.9, -17]) rotate(30, [0, 0, 1]) rotate(90, [1, 0, 0]) 
-   union() {
-     difference() {
-       cube(size=[18, 25, 6], center=true);
-       cube(size=[15, 22, 7], center=true);
-     };
-     translate([ 7, 0, 0.5]) cube(size=[2, 13, 5], center=true);
-     translate([-7, 0, 0.5]) cube(size=[2, 13, 5], center=true);
-   };
+   translate([165, -6, 13]) rotate(30, [0,0,1]) mirror([0, 0, 1]) _tilted_catcher_servo9g(with_motor);
+   translate([165, -6,  1]) rotate(30, [0,0,1]) _tilted_catcher_servo9g(with_motor);
  }
 };
 
@@ -319,16 +374,16 @@ module arm_fixed(){
   translate([0, 0, 3]) union() {
     //Rotation axle
     difference(){
-		  translate([-9, 2,    0]) cylinder(r=8, h=8);
+		  translate([-9, 2,    0]) cylinder(r=5, h=8);
 		  translate([-9, 2,    0]) cylinder(r=1.7, h=8);
       translate([-9, 2,  7.9]) cylinder(r=4, h=0.2); 
       translate([-9, 2,    5]) cylinder(r=3, h=3); 
       translate([-9, 2, -0.1]) cylinder(r=4, h=0.2); 
       translate([-9, 2,    0]) cylinder(r=3, h=3);
 	  };
-    translate([-76, 0, 0]) cube(size = [60, 4, 8]);
-    translate([-99, 18, 0]) rotate(38, [0, 0, -1]) difference(){
-		  cube(size=[30, 6, 8]);
+    translate([-76, 0, 0]) cube(size = [63, 3, 8]);
+    translate([-99.5, 18, 0]) rotate(38, [0, 0, -1]) difference(){
+		  cube(size=[30, 3, 8]);
       translate([4, 7, 4]) rotate(90, [1, 0, 0]) cylinder(r=1.5, h=8);
     };
   };
