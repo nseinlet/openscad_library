@@ -335,7 +335,10 @@ module extend_actuator_fix(pos_y){
       cube([30,2, 5], center=true);
       translate([-7, 0, 20]) rotate(90, [1, 0, 0]) cylinder(r=3, h=2, center=true);
     };
+    //actuator
     translate([-7, 0, 20]) rotate(90, [1, 0, 0]) cylinder(r=2, h=6, center=true);
+    //girder fix
+    for(posx=[-10, 10]) translate([posx, 0, 0]) rotate(90, [1, 0, 0]) cylinder(r=1.1, h=6, center=true);
   }
 }
 
@@ -359,7 +362,10 @@ module extend_mid_girder(y){
 }
 
 module extend_large_girder(y){
-  translate([165, y, 34]) cube([201, 5, 5], center=true);
+  difference(){
+    translate([165, y, 34]) cube([201, 5, 5], center=true);
+    for (x=[67, 133, 198.5, 263]) translate([x, y, 34]) rotate(90, [1, 0, 0]) cylinder(r=1.1, h=6, center=true);
+  };
 }
 
 module _extend_small(){
@@ -396,20 +402,37 @@ module _extend_mid(){
   };
 }
 
+module extend_large_front_girder(){
+  extend_large_girder(-48);
+  extend_rotation_girder(-48);
+  for (x=[105.5, 175.5, 246]){
+    girder_support_limit(x);
+  };
+};
+
+module extend_large_rear_girder(){
+  difference(){
+    union(){
+      extend_large_girder(-5.5);
+      extend_rotation_girder(-5.5);
+    };
+    //extend_actuator_fix fixings
+    for(posx=[-90.5, -70.5]) translate([posx+165, -5.5, 34]) rotate(90, [1, 0, 0]) cylinder(r=1.1, h=10, center=true);
+  };
+};
+
 module _extend_large(){
-  for (y=[-5.5, -48]){
-    extend_large_girder(y);
-    extend_rotation_girder(y);
-  }
+  extend_large_front_girder();
+  extend_large_rear_girder();
+
   for (pos_y=[-2,-9]){extend_actuator_fix(pos_y);};
 
   for (x=[67, 133, 198.5, 263]){transversal_girder(x);};
   for (x=[105.5, 175.5, 246]){
-    girder_vertical_support(x);
-    girder_support(x);
-    girder_support_support(x);
-    girder_support_limit(x);
-    _rack(x);
+    //girder_vertical_support(x);
+    //girder_support(x);
+    //girder_support_support(x);
+    //_rack(x);
   };
 }
 
