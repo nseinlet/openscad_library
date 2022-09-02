@@ -40,12 +40,12 @@ module girder_support(x){
 module girder_vertical_support(x){
   translate([x, 44, 35]) difference(){
     hull(){
-      rotate(90, [0,0,1]) rounded_cube(8, 8, 8, 2);
-      translate([0, 0, -12.5]) rotate(90, [0,0,1]) rounded_cube(8, 6, 8, 2);
+      rotate(90, [0,0,1]) rounded_cube(5, 10, 10, 2);
+      translate([0, 0, -12.5]) rotate(90, [0,0,1]) rounded_cube(5, 6, 8, 2);
     };
     translate([0, 0, 0]) cube([6, 9, 6], center=true);
-    translate([0, 1.2, 1]) rotate(90, [0, 1, 0]) cylinder(r=1, h=10, center=true);
-    translate([0, 1.2, -12]) rotate(90, [0, 0, 0]) cylinder(r=1, h=10, center=true);
+    translate([0, 0, 1]) rotate(90, [0, 1, 0]) cylinder(r=1, h=10, center=true);
+    translate([0, 0, -12]) rotate(90, [0, 0, 0]) cylinder(r=1, h=10, center=true);
   }
 }
 
@@ -429,10 +429,10 @@ module _extend_large(){
 
   for (x=[67, 133, 198.5, 263]){transversal_girder(x);};
   for (x=[105.5, 175.5, 246]){
-    //girder_vertical_support(x);
-    //girder_support(x);
-    //girder_support_support(x);
-    //_rack(x);
+    girder_vertical_support(x);
+    girder_support(x);
+    girder_support_support(x);
+    _rack(x);
   };
 }
 
