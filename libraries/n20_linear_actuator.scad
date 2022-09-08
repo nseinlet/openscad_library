@@ -19,10 +19,10 @@ module _n20_end(x){
 
 module n20_folded(length) {
   union(){
-    _n20_motor();
+    color("Black") _n20_motor();
     cylinder_length=55+length-44-4;
-    translate([44+(cylinder_length/2), 0, 0]) rotate(90, [0, 1, 0]) cylinder(r=6, h=cylinder_length, center=true);
-    _n20_end(55+length);
+    color("Silver") translate([44+(cylinder_length/2), 0, 0]) rotate(90, [0, 1, 0]) cylinder(r=6, h=cylinder_length, center=true);
+    color("Black") _n20_end(55+length);
   }
 }
 
@@ -32,10 +32,10 @@ module n20_unfolded(length) {
 
 module n20_unfolded_partial(length, unfolded_length) {
   union(){
-    _n20_motor();
+    color("Black") _n20_motor();
     cylinder_length=55+length-44-4;
-    translate([44+(cylinder_length/2), 0, 0]) rotate(90, [0, 1, 0]) cylinder(r=6, h=cylinder_length, center=true);
-    translate([44+(unfolded_length/2)+cylinder_length, 0, 0]) rotate(90, [0, 1, 0]) cylinder(r=4.5, h=unfolded_length, center=true);
-    _n20_end(55+length+unfolded_length);
+    color("Silver") translate([44+(cylinder_length/2), 0, 0]) rotate(90, [0, 1, 0]) cylinder(r=6, h=cylinder_length, center=true);
+    color("Gray") translate([44+(unfolded_length/2)+cylinder_length, 0, 0]) rotate(90, [0, 1, 0]) cylinder(r=4.5, h=unfolded_length, center=true);
+    color("Black") _n20_end(55+length+unfolded_length);
   }
 }
