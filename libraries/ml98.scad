@@ -40,21 +40,21 @@ module bras(pos_x) {
             };
         };
         //rotation axle
-        translate([0, 0, 110]) rotate(90, [0,1,0]) cylinder(r=2, h=2.1, center=true);
+        translate([0, 0, 110]) rotate(90, [0,1,0]) cylinder(r=2, h=2.25, center=true);
         //bucket axle
-        translate([0, 200, 0]) rotate(90, [0, 1, 0]) cylinder(r=2, h=2.1, center=true);
+        translate([0, 200, 0]) rotate(90, [0, 1, 0]) cylinder(r=2, h=2.25, center=true);
         //cylinder
-        translate([0, 123, 85]) rotate(90, [0, 1, 0]) cylinder(r=2, h=2.1, center=true);
+        translate([0, 123, 85]) rotate(90, [0, 1, 0]) cylinder(r=2, h=2.25, center=true);
         //rotation triangle
-        translate([0, 129, 103]) rotate(90, [0, 1, 0]) cylinder(r=1.5, h=2.1, center=true);
+        translate([0, 129, 103]) rotate(90, [0, 1, 0]) cylinder(r=1.5, h=2.25, center=true);
         //bucket parrallel
-        translate([0, 180, 15]) rotate(90, [0, 1, 0]) cylinder(r=1.5, h=2.1, center=true);
+        translate([0, 180, 15]) rotate(90, [0, 1, 0]) cylinder(r=1.5, h=2.25, center=true);
         //fixtures
-        translate([0, 30, 107]) rotate(90, [0,1,0]) cylinder(r=1, h=2.1, center=true);
-        translate([0, 70, 105]) rotate(90, [0,1,0]) cylinder(r=1, h=2.1, center=true);
-        translate([0, 110, 101]) rotate(90, [0,1,0]) cylinder(r=1, h=2.1, center=true);
-        translate([0, 142, 80]) rotate(90, [0,1,0]) cylinder(r=1, h=2.1, center=true);
-        translate([0, 166, 40]) rotate(90, [0,1,0]) cylinder(r=1.5, h=2.1, center=true);
+        translate([0, 30, 107]) rotate(90, [0,1,0]) cylinder(r=1.25, h=2.25, center=true);
+        translate([0, 70, 105]) rotate(90, [0,1,0]) cylinder(r=1.25, h=2.25, center=true);
+        translate([0, 110, 101]) rotate(90, [0,1,0]) cylinder(r=1.25, h=2.25, center=true);
+        translate([0, 142, 80]) rotate(90, [0,1,0]) cylinder(r=1.25, h=2.25, center=true);
+        translate([0, 166, 40]) rotate(90, [0,1,0]) cylinder(r=1.5, h=2.25, center=true);
     };
 }
 
@@ -307,6 +307,16 @@ for (mult=[1,-1]) {
   for (tmp_z=[26:2:32])fixation_chassis(mult*tmp_z);
   rotate_around_axle(mult*29, cylinder_y, cylinder_z, 78, 1, 0, 0) translate([mult*29, cylinder_y, cylinder_z]) rotate([180, 0, 90]) n20_unfolded(50);
 }
+}
+
+module bruder_3000_spacer(){
+  difference(){
+    hull() {
+      translate([0,   0, 2.5]) rounded_cube(2, 22, 5, 2);
+      translate([0, -11, 2.5]) rotate(90,[0,1,0]) cylinder(h=2, r=2.5, center=true);
+    };
+    translate([0,  3,   2.5]) rotate(90,[0,1,0]) cylinder(h=2.5, r=1.1, center=true);
+  };
 }
 
 module half_bruder3000_support(){
