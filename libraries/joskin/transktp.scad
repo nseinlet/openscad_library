@@ -1,6 +1,7 @@
 /******************************************
 
 Joskin TransKTP 22/50 for blocher chassis
+Variable width. 160 for wheeled chassis, 210 for tracked one.
 
 ******************************************/
 
@@ -36,27 +37,95 @@ module door_arm(){
   }
 }
 
-module door(){
+module door(width){
+  size = width/2;
   rotate(90, [1, 0, 0]) difference() {
-    cube([158, 86, 7], center=true);
-    translate([0, 0, -4]) linear_extrude(4) polygon(points = [
-        [33, -28],
-        [70, -28],
-        [70, 33],
-        [40, 33]
-    ]);
-    translate([0, 0, -4]) linear_extrude(4) polygon(points = [
-        [-33, -28],
-        [-70, -28],
-        [-70, 33],
-        [-40, 33]
-    ]);
-    translate([0, 0, -4]) linear_extrude(4) polygon(points = [
-        [19, -28],
-        [-19, -28],
-        [-19, 33],
-        [19, 33]
-    ]);
+    cube([width-2, 86, 7], center=true);
+    for (mult=[-1,1]){
+      translate([0, 0, -4]) linear_extrude(4) polygon(points = [
+          [mult*(size-47), -28],
+          [mult*(size-15), -28],
+          [mult*(size-15), 33],
+          [mult*(size-41), 33]
+      ]);
+      translate([0, 0, -4]) linear_extrude(4) polygon(points = [
+          [mult*(size-61), -28],
+          [mult*(size-99), -28],
+          [mult*(size-95), 33],
+          [mult*(size-61), 33]
+      ]);
+    }
 
+  }
+}
+
+module _box(size, width){
+  lrg=width/2;
+  translate([0, 6, 0]) difference() {
+    translate([0, size, 0]) rotate(90, [1, 0, 0])  linear_extrude(size+22) {
+      polygon(points = [
+        [lrg-8, 95],
+        [lrg-8, 45],
+        [lrg-11, 31],
+        [lrg-16, 23],
+        [lrg-25, 15],
+        [25-lrg, 15],
+        [16-lrg, 23],
+        [11-lrg, 31],
+        [8-lrg, 45],
+        [8-lrg, 95],
+        [6-lrg, 95],
+        [6-lrg, 45],
+        [9-lrg, 31],
+        [14-lrg, 23],
+        [25-lrg, 13],
+        [lrg-25, 13],
+        [lrg-14, 23],
+        [lrg-9, 31],
+        [lrg-6, 45],
+        [lrg-6, 95],
+      ]);
+    };
+    rotate(13, [1,0,0]) translate([0,-20,0]) cube([210, 46, 250], center=true);
+  };
+}
+
+module box_rear_block(size, width){
+lrg=width/2;
+translate([0, size + 6, 0]) rotate(90, [1, 0, 0])  linear_extrude(15) {
+      polygon(points = [
+        [6-lrg, 95],
+        [6-lrg, 45],
+        [9-lrg, 31],
+        [14-lrg, 23],
+        [25-lrg, 13],
+        [-25+lrg, 13],
+        [-14+lrg, 23],
+        [-9+lrg, 31],
+        [-6+lrg, 45],
+        [-6+lrg, 95],
+        [lrg-2, 95],
+        [lrg-2, 8],
+        [2-lrg, 8],
+        [2-lrg, 95],
+      ]);
+    };
+};
+
+module box_border(size){
+  translate([-2, -19, 80]) difference() {
+    cube([4, size+10,15]);
+    rotate(13, [1, 0, 0]) translate([0, -15.5, 7]) cube([20, 50, 20], center=true);
+  }
+}
+
+module box_beam(size){
+  translate([0, size/2-14, 8]) cube([12, size-40, 10], center=true);
+}
+
+module box_front_bottom(){
+  translate([0, 3, 3.05]) hull(){
+    translate([0, 0, 0]) cube([80, 6, 0.1], center=true);
+    translate([0, 0, 9.9]) cube([90, 6, 0.1], center=true);
   }
 }
