@@ -115,7 +115,7 @@ translate([0, size + 6, 0]) rotate(90, [1, 0, 0])  linear_extrude(15) {
 module box_border(size){
   translate([-2, -19, 80]) difference() {
     cube([4, size+10,15]);
-    rotate(13, [1, 0, 0]) translate([0, -15.5, 7]) cube([20, 50, 20], center=true);
+    rotate(13, [1, 0, 0]) translate([0, -17.5, 7]) cube([20, 50, 20], center=true);
   }
 }
 
@@ -128,4 +128,34 @@ module box_front_bottom(){
     translate([0, 0, 0]) cube([80, 6, 0.1], center=true);
     translate([0, 0, 9.9]) cube([90, 6, 0.1], center=true);
   }
+}
+
+module box_front(width){
+  lrg=width/2;
+  translate([0, 9, 0]) rotate(103, [1, 0, 0]) difference() {
+    union() {
+      linear_extrude(2) {
+        polygon(points = [
+          [6-lrg, 98],
+          [6-lrg, 46],
+          [9-lrg, 31.8],
+          [14-lrg, 23.5],
+          [25-lrg, 13],
+          [lrg-25, 13],
+          [lrg-14, 23.5],
+          [lrg-9, 31.8],
+          [lrg-6, 46],
+          [lrg-6, 98],
+        ]);
+      };
+      translate([0,91,4]) cube([width-4, 17, 4], center=true);
+      for (mult=[-1,1]) hull(){
+        translate([mult*39.7, 13, 4]) cube([10, 0.1, 4], center=true);
+        translate([mult*47, 84, 4]) cube([25, 0.1, 4], center=true);
+      }
+    };
+
+    translate([0,8.9,3]) rotate(13, [-1,0,0]) cube([width+30,10,10], center=true);
+    translate([0,102.6,0]) rotate(13, [-1,0,0]) cube([width+30,10,10], center=true);
+  };
 }
