@@ -1,5 +1,5 @@
-include <n20_linear_actuator.scad>
-include <tools.scad>
+include <../n20_linear_actuator.scad>
+include <../tools.scad>
 
 cylinder_y = 13;
 cylinder_z = 77;
