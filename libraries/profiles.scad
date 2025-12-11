@@ -19,3 +19,10 @@ module profile_carre(size, length, cut=false, angle_cut=45, cut_bevel=false, thi
     }
   }
 }
+
+module tube(r_outer, r_inner, length) {
+  difference() {
+    cylinder(r=r_outer, h=length, center=true);
+    translate([0, 0, -0.2]) cylinder(r=r_inner, h=length + 0.5, center=true);
+  }
+}

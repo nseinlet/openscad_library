@@ -2,7 +2,7 @@ include <tools.scad>
 
 girder_pos=[[49, 49.5], [108, 49.5], [78.5, 84], [18.5, 78.5]];
 ploughshare_holes=[[0, -4, -18],[0, -6, -22],[0, -8, -26],[0, -10, -30],[0, -12, -34]];
-spacer_height=2.1;
+spacer_height=7.1;
 
 inter_ploughshare=30;
 
